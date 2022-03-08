@@ -36,7 +36,8 @@
             @foreach (BlobData blob in ViewBag.Blobs)
             {
                 <a href="@blob.ImageUri" rel="lightbox" title="@blob.Caption">
-                    <img src="@blob.ThumbnailUri" width="192" title="@blob.Caption" style="padding-right: 16px; padding-bottom: 16px" />
+                    <!-- <img src="@blob.ThumbnailUri" width="192" title="@blob.Caption" style="padding-right: 16px; padding-bottom: 16px" /> -->
+                    <img src="@blob.ImageUri" width="192" title="@blob.Caption" style="padding-right: 16px; padding-bottom: 16px" />
                 </a>
             }
         </div>

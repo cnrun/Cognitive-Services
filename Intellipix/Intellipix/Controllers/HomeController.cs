@@ -32,7 +32,7 @@ namespace Intellipix.Controllers
         public async Task<IActionResult> Index(string term)
         {
             BlobServiceClient client = new BlobServiceClient(_configuration.GetConnectionString("Storage"));
-            BlobContainerClient container = client.GetBlobContainerClient("photos");
+            BlobContainerClient container = client.GetBlobContainerClient("webcam");
             List<BlobData> blobs = new List<BlobData>();
             term = term?.Trim();
 
@@ -47,8 +47,8 @@ namespace Intellipix.Controllers
                     blobs.Add(new BlobData()
                     {
                         ImageUri = blob.Uri.ToString(),
-                        ThumbnailUri = blob.Uri.ToString().Replace("/photos/", "/thumbnails/"),
-                        Caption = item.Metadata["Caption"]
+                        ThumbnailUri = blob.Uri.ToString().Replace("/webcam/", "/thumbnails/"),                        
+                        Caption = (item.Metadata.ContainsKey("Caption")?item.Metadata["Caption"]:"")
                     });
                 }
             }
@@ -84,7 +84,7 @@ namespace Intellipix.Controllers
                     {
                         // Save the original image in the "photos" container
                         BlobServiceClient client = new BlobServiceClient(_configuration.GetConnectionString("Storage"));
-                        BlobContainerClient container = client.GetBlobContainerClient("photos");
+                        BlobContainerClient container = client.GetBlobContainerClient("webcam");
                         BlobClient photo = container.GetBlobClient(Path.GetFileName(file.FileName));
                         await photo.UploadAsync(file.OpenReadStream(), true);
 
