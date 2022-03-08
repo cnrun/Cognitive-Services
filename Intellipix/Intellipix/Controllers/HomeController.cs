@@ -35,8 +35,7 @@ namespace Intellipix.Controllers
             BlobContainerClient container = client.GetBlobContainerClient("webcam");
             List<BlobData> blobs = new List<BlobData>();
             term = term?.Trim();
-
-            await foreach (BlobItem item in container.GetBlobsAsync(BlobTraits.Metadata))
+            await foreach (BlobItem item in container.GetBlobsAsync(BlobTraits.Metadata,BlobStates.None,"burg-nord/bn-2022-03-06T14"))
             {
                 if (String.IsNullOrEmpty(term) ||
                     item.Metadata["Caption"].Contains(term, StringComparison.CurrentCultureIgnoreCase) ||
